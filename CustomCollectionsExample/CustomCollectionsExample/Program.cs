@@ -52,7 +52,7 @@ public class Customer
 }
 
 //自定义集合类对象
-public class CustomersList : IEnumerable
+public class CustomersList : IEnumerable<Customer>
 {
     //集合内部硬编码类对象
     private List<Customer> customers = new List<Customer>()
@@ -61,12 +61,19 @@ public class CustomersList : IEnumerable
         new Customer(){CustomerID = "A102",CustomerName = "mane",CustomerEmail = "mane@msn.cn",TypeOfCustomer = TypeOfCustomer.RegularCustomer},
         new Customer(){CustomerID = "A103",CustomerName = "jeny",CustomerEmail = "jeny@msn.cn",TypeOfCustomer = TypeOfCustomer.VIPCustomer}
     };
-    public IEnumerator GetEnumerator()
+    
+    //普通：实现IEnumerable.GetEnumerator()方法
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+       return this.GetEnumerator();
+    }
+    //泛型：实现IEnumerable<T>.GetEnumerator()方法
+    public IEnumerator<Customer> GetEnumerator()
     {
         for (int i = 0; i < customers.Count; i++)
         {
             yield return customers[i];
-        }
+        } 
     }
 
     //通过自定义Add方法来进行自定义的类型验证
