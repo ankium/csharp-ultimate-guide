@@ -10,6 +10,7 @@ class Program
         Console.WriteLine("----------通过foreach循环调用迭代器---------");
         foreach (int i in ienumerable)
         {
+            //内部foreach循环每次调用GetEnumerator()方法，基于该IEnumerator迭代器不断调用MoveNext()方法并打印Current的值
             Console.WriteLine(i);
         }
         //通过while循环调用
