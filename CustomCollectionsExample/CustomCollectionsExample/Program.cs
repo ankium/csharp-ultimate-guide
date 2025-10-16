@@ -1,6 +1,7 @@
 ﻿using System.Reflection.Metadata.Ecma335;
 using System.Security.AccessControl;
 using System.Collections;
+using System.Collections.Generic;
 namespace CustomCollectionsExample;
 
 class Program
@@ -28,12 +29,16 @@ class Program
             CustomerEmail = "kady@msn.cn",
             TypeOfCustomer = TypeOfCustomer.VIPCustomer
         };
+        //调用自定义集合类实现的接口方法
+        Console.WriteLine(customersList.Count);
         customersList.Add(customer1);
         customersList.Add(customer2);
         foreach (Customer cust in customersList)
         {
             Console.WriteLine(cust.CustomerID+","+cust.CustomerName+","+cust.CustomerEmail+","+cust.TypeOfCustomer);
         }
+        customersList.Remove(customer2);
+        Console.WriteLine("customersList Contains B107:" + customersList.Contains(customer2));
     }
 }
 
@@ -52,7 +57,7 @@ public class Customer
 }
 
 //自定义集合类对象
-public class CustomersList : IEnumerable<Customer>
+public class CustomersList : ICollection<Customer>
 {
     //集合内部硬编码类对象
     private List<Customer> customers = new List<Customer>()
@@ -61,7 +66,13 @@ public class CustomersList : IEnumerable<Customer>
         new Customer(){CustomerID = "A102",CustomerName = "mane",CustomerEmail = "mane@msn.cn",TypeOfCustomer = TypeOfCustomer.RegularCustomer},
         new Customer(){CustomerID = "A103",CustomerName = "jeny",CustomerEmail = "jeny@msn.cn",TypeOfCustomer = TypeOfCustomer.VIPCustomer}
     };
-    
+
+    //实现ICollection<T>接口属性
+    public int Count => customers.Count;
+
+    //实现ICollection<T>接口属性
+    public bool IsReadOnly => false;
+
     //普通：实现IEnumerable.GetEnumerator()方法
     IEnumerator IEnumerable.GetEnumerator()
     {
@@ -76,7 +87,7 @@ public class CustomersList : IEnumerable<Customer>
         } 
     }
 
-    //通过自定义Add方法来进行自定义的类型验证
+    //实现ICollection<T>接口的Add方法来进行自定义的类型验证
     public void Add(Customer newCustomer)
     {
         if (newCustomer.CustomerID.StartsWith("A")|| newCustomer.CustomerID.StartsWith("a"))
@@ -88,5 +99,25 @@ public class CustomersList : IEnumerable<Customer>
             Console.WriteLine("Invalid customer ID");
         }
     }
-    
+
+    //实现ICollection<T>接口的Clear方法
+    public void Clear()
+    {
+        customers.Clear();
+    }
+    //实现ICollection<T> 接口的Contains方法
+    public bool Contains(Customer item)
+    {
+        return customers.Contains(item);
+    }
+    //实现ICollection<T>接口的CopyTo方法
+    public void CopyTo(Customer[] array, int arrayIndex)
+    {
+        customers.CopyTo(array, arrayIndex);
+    }
+    //实现ICollection<T> 接口的Remove方法
+    public bool Remove(Customer item)
+    {
+        return customers.Remove(item);
+    }
 }
