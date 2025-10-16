@@ -43,6 +43,14 @@ class Program
         customersList.Insert(3, customer3);
         Console.WriteLine(customersList.IndexOf(customer3)+","+customer3.CustomerID+","+customer3.CustomerName+","+customer3.CustomerEmail+","+customer3.TypeOfCustomer);
         customersList.RemoveAt(2);
+        Customer customer4 = new Customer()
+        {
+            CustomerID = "A108",
+            CustomerName = "bili",
+            CustomerEmail = "bili@msn.cn",
+            TypeOfCustomer = TypeOfCustomer.RegularCustomer
+        };
+        Console.WriteLine("customersList Contains B108:" + customersList.Contains(customer4));
     }
 }
 
@@ -52,12 +60,18 @@ public enum TypeOfCustomer
     VIPCustomer
 }
 
-public class Customer
+public class Customer:IEquatable<Customer>
 {
     public string CustomerID { get; set; }
     public string CustomerName { get; set; }
     public string CustomerEmail { get; set; }
     public TypeOfCustomer TypeOfCustomer { get; set; }
+
+    //实现IEquatable<T>接口的Equals方法
+    public bool Equals(Customer? other)
+    {
+        return this.CustomerID == other?.CustomerID && this.CustomerName == other?.CustomerName && this.CustomerEmail == other?.CustomerEmail && this.TypeOfCustomer == other?.TypeOfCustomer;
+    }
 }
 
 //自定义集合类对象
