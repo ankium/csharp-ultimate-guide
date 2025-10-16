@@ -39,6 +39,10 @@ class Program
         }
         customersList.Remove(customer2);
         Console.WriteLine("customersList Contains B107:" + customersList.Contains(customer2));
+        Customer customer3 = new Customer() { CustomerID = "A108", CustomerName = "bili", CustomerEmail = "bili@msn.cn", TypeOfCustomer = TypeOfCustomer.RegularCustomer };
+        customersList.Insert(3, customer3);
+        Console.WriteLine(customersList.IndexOf(customer3)+","+customer3.CustomerID+","+customer3.CustomerName+","+customer3.CustomerEmail+","+customer3.TypeOfCustomer);
+        customersList.RemoveAt(2);
     }
 }
 
@@ -57,7 +61,7 @@ public class Customer
 }
 
 //自定义集合类对象
-public class CustomersList : ICollection<Customer>
+public class CustomersList : IList<Customer>
 {
     //集合内部硬编码类对象
     private List<Customer> customers = new List<Customer>()
@@ -72,6 +76,9 @@ public class CustomersList : ICollection<Customer>
 
     //实现ICollection<T>接口属性
     public bool IsReadOnly => false;
+
+    //实现IList<T>接口的索引
+    public Customer this[int index] { get => customers[index]; set => customers[index]=value; }
 
     //普通：实现IEnumerable.GetEnumerator()方法
     IEnumerator IEnumerable.GetEnumerator()
@@ -119,5 +126,36 @@ public class CustomersList : ICollection<Customer>
     public bool Remove(Customer item)
     {
         return customers.Remove(item);
+    }
+    //实现IList<T>接口的IndexOf方法
+    public int IndexOf(Customer item)
+    {
+        return customers.IndexOf(item);
+    }
+    //实现IList<T>接口的Insert方法
+    public void Insert(int index, Customer item)
+    {
+        if (!(index<0))
+        {
+            customers.Insert(index, item);
+        }
+        else
+        {
+            Console.WriteLine("Invalid Index");
+        }
+        
+    }
+    //实现IList<T>接口的RemoveAt方法
+    public void RemoveAt(int index)
+    {
+        if (!(index<0))
+        {
+            customers.RemoveAt(index);
+        }
+        else
+        {
+            Console.WriteLine("Invalid Index");
+        }
+        
     }
 }
