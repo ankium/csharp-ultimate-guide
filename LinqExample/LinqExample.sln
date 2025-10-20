@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinqExample", "LinqExample\LinqExample.csproj", "{A96285D1-910B-4BD9-A0D8-93FD45EBB2BD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassLibraryExample", "ClassLibraryExample\ClassLibraryExample.csproj", "{0E925773-D968-4FC7-B236-13953717A40D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A96285D1-910B-4BD9-A0D8-93FD45EBB2BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A96285D1-910B-4BD9-A0D8-93FD45EBB2BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A96285D1-910B-4BD9-A0D8-93FD45EBB2BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A96285D1-910B-4BD9-A0D8-93FD45EBB2BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E925773-D968-4FC7-B236-13953717A40D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E925773-D968-4FC7-B236-13953717A40D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E925773-D968-4FC7-B236-13953717A40D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E925773-D968-4FC7-B236-13953717A40D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
