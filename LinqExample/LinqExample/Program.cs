@@ -17,7 +17,7 @@ class Program
         List<Employee> newEmployeeList = employees.OrderBy(emp => emp.EmpName).ToList();
         foreach (var emp in newEmployeeList)
         {
-            Console.WriteLine(emp.EmpId+","+emp.EmpName+","+emp.Job+","+emp.Salary);
+            Console.WriteLine(emp.EmpId + "," + emp.EmpName + "," + emp.Job + "," + emp.Salary);
         }
     }
 }
