@@ -1,0 +1,52 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HarshaBank.BusinessLogicLayer", "HarshaBank.BusinessLogicLayer\HarshaBank.BusinessLogicLayer.csproj", "{6272E515-2D11-434F-AC96-FF5B1A1E1E71}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HarshaBank.Configuration", "HarshaBank.Configuration\HarshaBank.Configuration.csproj", "{A9F7EF88-1864-4611-A50C-A620DCB3509C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HarshaBank.DataAccessLayer", "HarshaBank.DataAccessLayer\HarshaBank.DataAccessLayer.csproj", "{9258053D-B788-4F42-90E6-D60F0DCD25A3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HarshaBank.Entities", "HarshaBank.Entities\HarshaBank.Entities.csproj", "{EAEB4EC8-8E95-4BE3-B290-E8A04783D04D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HarshaBank.Exceptions", "HarshaBank.Exceptions\HarshaBank.Exceptions.csproj", "{C713244A-2D5D-48D4-9C75-FC2CA9FB60DC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HarshaBank.Presentation", "HarshaBank.Presentation\HarshaBank.Presentation.csproj", "{BC265B74-3369-4E31-818F-340BA220CB24}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6272E515-2D11-434F-AC96-FF5B1A1E1E71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6272E515-2D11-434F-AC96-FF5B1A1E1E71}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6272E515-2D11-434F-AC96-FF5B1A1E1E71}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6272E515-2D11-434F-AC96-FF5B1A1E1E71}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A9F7EF88-1864-4611-A50C-A620DCB3509C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9F7EF88-1864-4611-A50C-A620DCB3509C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9F7EF88-1864-4611-A50C-A620DCB3509C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9F7EF88-1864-4611-A50C-A620DCB3509C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9258053D-B788-4F42-90E6-D60F0DCD25A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9258053D-B788-4F42-90E6-D60F0DCD25A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9258053D-B788-4F42-90E6-D60F0DCD25A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9258053D-B788-4F42-90E6-D60F0DCD25A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EAEB4EC8-8E95-4BE3-B290-E8A04783D04D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAEB4EC8-8E95-4BE3-B290-E8A04783D04D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EAEB4EC8-8E95-4BE3-B290-E8A04783D04D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EAEB4EC8-8E95-4BE3-B290-E8A04783D04D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C713244A-2D5D-48D4-9C75-FC2CA9FB60DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C713244A-2D5D-48D4-9C75-FC2CA9FB60DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C713244A-2D5D-48D4-9C75-FC2CA9FB60DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C713244A-2D5D-48D4-9C75-FC2CA9FB60DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC265B74-3369-4E31-818F-340BA220CB24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC265B74-3369-4E31-818F-340BA220CB24}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC265B74-3369-4E31-818F-340BA220CB24}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC265B74-3369-4E31-818F-340BA220CB24}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
