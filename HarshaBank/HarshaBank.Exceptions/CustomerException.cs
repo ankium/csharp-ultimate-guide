@@ -18,7 +18,7 @@ public class CustomerException:ApplicationException
     /// </summary>
     /// <param name="message">Exception message</param>
     /// <param name="innerException">Inner exception</param>
-    public CustomerException(string message, Exception innerException) : base
+    public CustomerException(string message, Exception innerException) : base(message, innerException)
     {
 
     }
