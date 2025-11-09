@@ -39,12 +39,25 @@ public class CustomersDataAccessLayer : ICustomersDataAccessLayer
     /// <returns>Returns Guid of newly created customer/returns>
     public Guid AddCustomer(Customer customer)
     {
-        //generate new Guid
-        customer.CustomerID = Guid.NewGuid();
+        try
+        {
+            //generate new Guid
+            customer.CustomerID = Guid.NewGuid();
 
-        //add customer
-        Customers.Add(customer);
-        return customer.CustomerID;
+            //add customer
+            Customers.Add(customer);
+            return customer.CustomerID;
+        }
+        catch (CustomerException)
+        {
+            throw;
+        }
+        catch (System.Exception)
+        {
+
+            throw;
+        }
+
     }
 
     /// <summary>
@@ -54,17 +67,30 @@ public class CustomersDataAccessLayer : ICustomersDataAccessLayer
     /// <returns></returns>
     public bool DeleteCustomer(Guid customerID)
     {
-        //delete customer by CustomerID
-        if (Customers.RemoveAll(item => item.CustomerID == customerID) > 0)
+        try
         {
-            //indicates one or more customers are deleted
-            return true;
+            //delete customer by CustomerID
+            if (Customers.RemoveAll(item => item.CustomerID == customerID) > 0)
+            {
+                //indicates one or more customers are deleted
+                return true;
+            }
+            else
+            {
+                //indicates no customer is deleted
+                return false;
+            }
         }
-        else
+        catch (CustomerException)
         {
-            //indicates no customer is deleted
-            return false;
+            throw;
         }
+        catch (System.Exception)
+        {
+
+            throw;
+        }
+
     }
 
     /// <summary>
@@ -73,11 +99,24 @@ public class CustomersDataAccessLayer : ICustomersDataAccessLayer
     /// <returns>Customers list</returns>
     public List<Customer> GetCustomers()
     {
-        //create a new customers list
-        List<Customer> customersList = new List<Customer>();
-        //copy all customers from the source collection into the newCustomers list
-        Customers.ForEach(item => customersList.Add(item.Clone() as Customer));
-        return customersList;
+        try
+        {
+            //create a new customers list
+            List<Customer> customersList = new List<Customer>();
+            //copy all customers from the source collection into the newCustomers list
+            Customers.ForEach(item => customersList.Add(item.Clone() as Customer));
+            return customersList;
+        }
+        catch (CustomerException)
+        {
+            throw;
+        }
+        catch (System.Exception)
+        {
+
+            throw;
+        }
+
     }
 
     /// <summary>
@@ -87,15 +126,28 @@ public class CustomersDataAccessLayer : ICustomersDataAccessLayer
     /// <returns>List of matching customers</returns>
     public List<Customer> GetCustomersByCondition(Predicate<Customer> predicate)
     {
-        //create a new customers list
-        List<Customer> customersList = new List<Customer>();
+        try
+        {
+            //create a new customers list
+            List<Customer> customersList = new List<Customer>();
 
-        //filter the collection
-        List<Customer> filteredCustomers = customersList.FindAll(predicate);
+            //filter the collection
+            List<Customer> filteredCustomers = customersList.FindAll(predicate);
 
-        //copy all customers from the source collection into the newCustomers list
-        Customers.ForEach(item => filteredCustomers.Add(item.Clone() as Customer));
-        return customersList;
+            //copy all customers from the source collection into the newCustomers list
+            Customers.ForEach(item => filteredCustomers.Add(item.Clone() as Customer));
+            return customersList;
+        }
+        catch (CustomerException)
+        {
+            throw;
+        }
+        catch (System.Exception)
+        {
+
+            throw;
+        }
+
     }
 
     /// <summary>
@@ -105,25 +157,38 @@ public class CustomersDataAccessLayer : ICustomersDataAccessLayer
     /// <returns>Determines whether the customer is updated or not</returns>
     public bool UpdateCustomer(Customer customer)
     {
-        //find existing customer by CustomerID
-        Customer existingCustomer = Customers.Find(item => item.CustomerID == customer.CustomerID);
-        
-        //update all details of customer
-        if (existingCustomer != null)
+        try
         {
-            existingCustomer.CustomerCode=customer.CustomerCode;
-            existingCustomer.CustomerName = customer.CustomerName;
-            existingCustomer.Address = customer.Address;
-            existingCustomer.City = customer.City;
-            existingCustomer.Country = customer.Country;
-            existingCustomer.Landmark = customer.Landmark;
-            existingCustomer.Mobile = customer.Mobile;
-            return true;
+            //find existing customer by CustomerID
+            Customer existingCustomer = Customers.Find(item => item.CustomerID == customer.CustomerID);
+
+            //update all details of customer
+            if (existingCustomer != null)
+            {
+                existingCustomer.CustomerCode = customer.CustomerCode;
+                existingCustomer.CustomerName = customer.CustomerName;
+                existingCustomer.Address = customer.Address;
+                existingCustomer.City = customer.City;
+                existingCustomer.Country = customer.Country;
+                existingCustomer.Landmark = customer.Landmark;
+                existingCustomer.Mobile = customer.Mobile;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
-        else
+        catch (CustomerException)
         {
-            return false;
+            throw;
         }
+        catch (System.Exception)
+        {
+
+            throw;
+        }
+
     }
     #endregion
 }
