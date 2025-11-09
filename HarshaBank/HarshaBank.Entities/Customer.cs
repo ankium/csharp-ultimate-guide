@@ -6,7 +6,7 @@ namespace HarshaBank.Entities;
 /// <summary>
 /// Represents customer of the bank
 /// </summary>
-public class Customer : ICustomer
+public class Customer : ICustomer, ICloneable
 {
 
     #region Private Fields
@@ -33,12 +33,12 @@ public class Customer : ICustomer
     /// Auto-generated code number fo the customer
     /// </summary>
     public long CustomerCode
-    { 
+    {
         get => _customerCode;
         set
         {
             //customer code should be positive
-            if (value >0)
+            if (value > 0)
             {
                 _customerCode = value;
             }
@@ -46,7 +46,7 @@ public class Customer : ICustomer
             {
                 throw new CustomerException("Customer code should be positive only.");
             }
-        } 
+        }
     }
 
     /// <summary>
@@ -66,24 +66,24 @@ public class Customer : ICustomer
             {
                 throw new CustomerException("Customer Name should not be null and than 40 characters long.");
             }
-        } 
+        }
     }
-    
+
     /// <summary>
     /// Address of the customer
     /// </summary>
     public string Address { get => _address; set => _address = value; }
-    
+
     /// <summary>
     /// Landmark of the customer's address
     /// </summary>
     public string Landmark { get => _landmark; set => _landmark = value; }
-    
+
     /// <summary>
     /// City of the customer
     /// </summary>
     public string City { get => _city; set => _city = value; }
-    
+
     /// <summary>
     /// Country of the customer
     /// </summary>
@@ -108,7 +108,21 @@ public class Customer : ICustomer
             }
         }
     }
+    #endregion
 
+    #region Methods
+    public object Clone()
+    {
+        return new Customer() {
+            CustomerID = this.CustomerID,
+            CustomerCode = this.CustomerCode,
+            Address = this.Address,
+            Landmark = this.Landmark,
+            City = this.City,
+            Country = this.Country,
+            Mobile = this.Mobile
+        };
+    }
     #endregion
 
 }
