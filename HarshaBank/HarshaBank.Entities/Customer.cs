@@ -113,9 +113,11 @@ public class Customer : ICustomer, ICloneable
     #region Methods
     public object Clone()
     {
-        return new Customer() {
+        return new Customer()
+        {
             CustomerID = this.CustomerID,
             CustomerCode = this.CustomerCode,
+            CustomerName = this.CustomerName,
             Address = this.Address,
             Landmark = this.Landmark,
             City = this.City,
