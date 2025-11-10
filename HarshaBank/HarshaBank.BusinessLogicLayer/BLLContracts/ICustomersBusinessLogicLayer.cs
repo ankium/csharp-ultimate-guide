@@ -1,11 +1,11 @@
 using System;
-using HarshaBank.Entities;
 using System.Collections.Generic;
-namespace HarshaBank.DataAccessLayer.DALContracts;
+using HarshaBank.Entities;
+namespace HarshaBank.BusinessLogicLayer.BLLContracts;
 /// <summary>
-/// Interface that represents customers data access layer
+/// Interface that represents customers business logic
 /// </summary>
-public interface ICustomersDataAccessLayer
+public interface ICustomersBusinessLogicLayer
 {
     /// <summary>
     /// Returns all existing customers
@@ -40,5 +40,4 @@ public interface ICustomersDataAccessLayer
     /// <param name="customerID">CustomerID to delete</param>
     /// <returns>Returns true,that indicates the customer is deleted successfully</returns>
     bool DeleteCustomer(Guid customerID);
-
 }
