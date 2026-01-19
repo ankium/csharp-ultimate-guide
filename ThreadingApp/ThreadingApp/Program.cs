@@ -13,7 +13,7 @@ class NumbersCounter
         {
             System.Console.ForegroundColor = ConsoleColor.Green;
             System.Console.Write($"i={i}, ");
-            Thread.Sleep(1000); // Sleep for 1 second
+            Thread.Sleep(100); // Sleep for 1 second
         }
         Thread.Sleep(1000); // Sleep for 1 second after finishing
         System.Console.WriteLine("CountUp finished.");
@@ -28,7 +28,7 @@ class NumbersCounter
         {
             System.Console.ForegroundColor = ConsoleColor.Red;
             System.Console.Write($"j={j}, ");
-            Thread.Sleep(1000); // Sleep for 1 second
+            Thread.Sleep(100); // Sleep for 1 second
         }
         Thread.Sleep(1000); // Sleep for 1 second after finishing
         System.Console.WriteLine("CountDown finished.");
@@ -51,17 +51,21 @@ class Program
         ThreadStart threadStart1 = new ThreadStart(counter.CountUp);
         Thread thread1 = new Thread(threadStart1);
         thread1.Name = "CountUp-Thread";
+        thread1.Priority = ThreadPriority.Highest;
         // Invoke CountUp
         thread1.Start();
-        System.Console.WriteLine(thread1.Name+" is "+thread1.ThreadState.ToString()); //Running
+        System.Console.WriteLine($"{thread1.Name}({thread1.ManagedThreadId}) is {thread1.ThreadState.ToString()}"); //Running
 
         // Create second thread
         ThreadStart threadStart2 = new ThreadStart(counter.CountDown);
-        Thread thread2 = new Thread(threadStart2);
-        thread2.Name = "CountDown-Thread";
+        Thread thread2 = new Thread(threadStart2)
+        {
+            Name = "CountDown-Thread",
+            Priority = ThreadPriority.BelowNormal
+        };
         //invoke CountDown
         thread2.Start();
-        System.Console.WriteLine(thread2.Name+" is "+thread2.ThreadState.ToString());//Running
+        System.Console.WriteLine($"{thread2.Name}({thread2.ManagedThreadId}) is {thread2.ThreadState.ToString()}");//Running
 
         // Wait for both threads to finish
         thread1.Join();
