@@ -36,12 +36,26 @@ class Program
 
         // Create a NumbersCounter instance
         NumbersCounter counter = new NumbersCounter();
+
+        // Create first thread
+        ThreadStart threadStart1 = new ThreadStart(counter.CountUp);
+        Thread thread1 = new Thread(threadStart1);
+        thread1.Name = "CountUp-Thread";
+        System.Console.WriteLine(thread1.Name+" is "+thread1.ThreadState.ToString()); //Unstarted
         // Invoke CountUp
-        counter.CountUp();
+        thread1.Start();
+        System.Console.WriteLine(thread1.Name+" is "+thread1.ThreadState.ToString()); //Running
 
+        // Create second thread
+        ThreadStart threadStart2 = new ThreadStart(counter.CountDown);
+        Thread thread2 = new Thread(threadStart2);
+        thread2.Name = "CountDown-Thread";
+        System.Console.WriteLine(thread2.Name+" is "+thread2.ThreadState.ToString());//Unstarted
         //invoke CountDown
-        counter.CountDown();
+        thread2.Start();
+        System.Console.WriteLine(thread2.Name+" is "+thread2.ThreadState.ToString());//Running
 
+        
         System.Console.WriteLine(mainThread.Name+" has finished execution."); 
         //System.Console.ReadKey();
     }
