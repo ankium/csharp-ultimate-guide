@@ -11,6 +11,7 @@ class NumbersCounter
         {
             System.Console.ForegroundColor = ConsoleColor.Green;
             System.Console.Write($"i={i}, ");
+            Thread.Sleep(1000); // Sleep for 1 second
         }
     }
 
@@ -21,6 +22,7 @@ class NumbersCounter
         {
             System.Console.ForegroundColor = ConsoleColor.Red;
             System.Console.Write($"j={j}, ");
+            Thread.Sleep(1000); // Sleep for 1 second
         }
     }
 }
