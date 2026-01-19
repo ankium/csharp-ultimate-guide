@@ -6,6 +6,8 @@ class NumbersCounter
 {
     public void CountUp()
     {
+        System.Console.WriteLine("CountUp started.");
+        Thread.Sleep(1000); // Sleep for 1 second before starting
         // i = 1 to 100
         for (int i = 1; i <= 100; i++)
         {
@@ -13,10 +15,14 @@ class NumbersCounter
             System.Console.Write($"i={i}, ");
             Thread.Sleep(1000); // Sleep for 1 second
         }
+        Thread.Sleep(1000); // Sleep for 1 second after finishing
+        System.Console.WriteLine("CountUp finished.");
     }
 
     public void CountDown()
     {
+        System.Console.WriteLine("CountDown started.");
+        Thread.Sleep(1000); // Sleep for 1 second before starting
         // j = 100 to 1
         for (int j = 100; j >= 1; j--)
         {
@@ -24,6 +30,8 @@ class NumbersCounter
             System.Console.Write($"j={j}, ");
             Thread.Sleep(1000); // Sleep for 1 second
         }
+        Thread.Sleep(1000); // Sleep for 1 second after finishing
+        System.Console.WriteLine("CountDown finished.");
     }
 }
 
@@ -34,7 +42,7 @@ class Program
         // Get main thread
         Thread mainThread = Thread.CurrentThread;
         mainThread.Name = "Main-Thread"; 
-        System.Console.WriteLine(mainThread.Name); // Main thread
+        System.Console.WriteLine(mainThread.Name+" Started."); // Main thread
 
         // Create a NumbersCounter instance
         NumbersCounter counter = new NumbersCounter();
@@ -43,7 +51,6 @@ class Program
         ThreadStart threadStart1 = new ThreadStart(counter.CountUp);
         Thread thread1 = new Thread(threadStart1);
         thread1.Name = "CountUp-Thread";
-        System.Console.WriteLine(thread1.Name+" is "+thread1.ThreadState.ToString()); //Unstarted
         // Invoke CountUp
         thread1.Start();
         System.Console.WriteLine(thread1.Name+" is "+thread1.ThreadState.ToString()); //Running
@@ -52,11 +59,13 @@ class Program
         ThreadStart threadStart2 = new ThreadStart(counter.CountDown);
         Thread thread2 = new Thread(threadStart2);
         thread2.Name = "CountDown-Thread";
-        System.Console.WriteLine(thread2.Name+" is "+thread2.ThreadState.ToString());//Unstarted
         //invoke CountDown
         thread2.Start();
         System.Console.WriteLine(thread2.Name+" is "+thread2.ThreadState.ToString());//Running
 
+        // Wait for both threads to finish
+        thread1.Join();
+        thread2.Join();
         
         System.Console.WriteLine(mainThread.Name+" has finished execution."); 
         //System.Console.ReadKey();
