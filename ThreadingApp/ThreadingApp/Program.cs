@@ -6,29 +6,25 @@ class MaxCount
 {
     public int Count { get; set; }
 }
-class NumbersCounter
+
+class NumbersUpCounter
 {
-    public void CountUp(object? count)
+    public int Count { get; set; }
+    public void CountUp()
     {
         try
         {
             System.Console.WriteLine("CountUp started.");
             Thread.Sleep(1000); // Sleep for 1 second before starting
             // i = 1 to count
-            int? countInt = (int?)count;
-            if (countInt == null)
+
+            for (int i = 1; i <= Count; i++)
             {
-                throw new ArgumentException("Count must be an integer.");
+                System.Console.ForegroundColor = ConsoleColor.Green;
+                System.Console.Write($"i={i}, ");
+                Thread.Sleep(100); // Sleep for 1 second
             }
-            else
-            {
-                for (int i = 1; i <= countInt; i++)
-                {
-                    System.Console.ForegroundColor = ConsoleColor.Green;
-                    System.Console.Write($"i={i}, ");
-                    Thread.Sleep(100); // Sleep for 1 second
-                }
-            }
+        
             Thread.Sleep(1000); // Sleep for 1 second after finishing
             System.Console.WriteLine("CountUp finished.");
         }
@@ -37,7 +33,10 @@ class NumbersCounter
             System.Console.WriteLine("CountUp was interrupted: " + ex.Message);
         }
     }
+}
 
+class NumbersDownCounter
+{
     public void CountDown(object? count)
     {
         System.Console.WriteLine("CountDown started.");
@@ -68,20 +67,22 @@ class Program
         mainThread.Name = "Main-Thread"; 
         System.Console.WriteLine(mainThread.Name+" Started."); // Main thread
 
-        // Create a NumbersCounter instance
-        NumbersCounter counter = new NumbersCounter();
+        // Create a NumbersUpCounter instance
+        NumbersUpCounter upCounter = new NumbersUpCounter(){ Count = 50 };//自定义线程对象并设置Count属性
 
         // Create first thread
-        ParameterizedThreadStart threadStart1 = new ParameterizedThreadStart(counter.CountUp);//将CountUp方法转换为ParameterizedThreadStart委托
+        ThreadStart threadStart1 = new ThreadStart(upCounter.CountUp);//将CountUp方法转换为ThreadStart委托
         Thread thread1 = new Thread(threadStart1);
         thread1.Name = "CountUp-Thread";
         thread1.Priority = ThreadPriority.Highest;
         // Invoke CountUp
-        thread1.Start(50);
+        thread1.Start();
         System.Console.WriteLine($"{thread1.Name}({thread1.ManagedThreadId}) is {thread1.ThreadState.ToString()}"); //Running
 
+        // Create a NumbersDownCounter instance
+        NumbersDownCounter downCounter = new NumbersDownCounter();
         // Create second thread
-        ParameterizedThreadStart threadStart2 = new ParameterizedThreadStart(counter.CountDown);//将CountDown方法转换为ParameterizedThreadStart委托
+        ParameterizedThreadStart threadStart2 = new ParameterizedThreadStart(downCounter.CountDown);//将CountDown方法转换为ParameterizedThreadStart委托
         Thread thread2 = new Thread(threadStart2)
         {
             Name = "CountDown-Thread",
