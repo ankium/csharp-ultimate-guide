@@ -4,14 +4,14 @@ namespace ThreadingApp;
 
 class NumbersCounter
 {
-    public void CountUp()
+    public void CountUp(int count)
     {
         try
         {
             System.Console.WriteLine("CountUp started.");
             Thread.Sleep(1000); // Sleep for 1 second before starting
-            // i = 1 to 100
-            for (int i = 1; i <= 100; i++)
+            // i = 1 to count
+            for (int i = 1; i <= count; i++)
             {
                 System.Console.ForegroundColor = ConsoleColor.Green;
                 System.Console.Write($"i={i}, ");
@@ -26,12 +26,12 @@ class NumbersCounter
         }
     }
 
-    public void CountDown()
+    public void CountDown(int count)
     {
         System.Console.WriteLine("CountDown started.");
         Thread.Sleep(1000); // Sleep for 1 second before starting
-        // j = 100 to 1
-        for (int j = 100; j >= 1; j--)
+        // j = count to 1
+        for (int j = count; j >= 1; j--)
         {
             System.Console.ForegroundColor = ConsoleColor.Red;
             System.Console.Write($"j={j}, ");
@@ -55,7 +55,7 @@ class Program
         NumbersCounter counter = new NumbersCounter();
 
         // Create first thread
-        ThreadStart threadStart1 = new ThreadStart(counter.CountUp);
+        ThreadStart threadStart1 = new ThreadStart(() => counter.CountUp(50));//将lambda表达式转换为ThreadStart委托，并在其中调用CountUp方法
         Thread thread1 = new Thread(threadStart1);
         thread1.Name = "CountUp-Thread";
         thread1.Priority = ThreadPriority.Highest;
@@ -64,7 +64,7 @@ class Program
         System.Console.WriteLine($"{thread1.Name}({thread1.ManagedThreadId}) is {thread1.ThreadState.ToString()}"); //Running
 
         // Create second thread
-        ThreadStart threadStart2 = new ThreadStart(counter.CountDown);
+        ThreadStart threadStart2 = new ThreadStart(() => counter.CountDown(50));//将lambda表达式转换为ThreadStart委托，并在其中调用CountDown方法
         Thread thread2 = new Thread(threadStart2)
         {
             Name = "CountDown-Thread",
@@ -75,17 +75,20 @@ class Program
         System.Console.WriteLine($"{thread2.Name}({thread2.ManagedThreadId}) is {thread2.ThreadState.ToString()}");//Running
 
         // Wait for both threads to finish
-        //thread1.Join();
-        //thread2.Join();
+        thread1.Join();
+        thread2.Join();
         
         //thread interruption example
+
+        /*
         Thread.Sleep(3000); // Let the threads run for 3 seconds
         if (thread1.IsAlive)
         {
             System.Console.WriteLine($"Interrupting {thread1.Name}...");
             thread1.Interrupt();
         }
-        
+        */
+
         System.Console.WriteLine(mainThread.Name+" has finished execution."); 
         //System.Console.ReadKey();
     }
