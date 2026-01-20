@@ -6,17 +6,24 @@ class NumbersCounter
 {
     public void CountUp()
     {
-        System.Console.WriteLine("CountUp started.");
-        Thread.Sleep(1000); // Sleep for 1 second before starting
-        // i = 1 to 100
-        for (int i = 1; i <= 100; i++)
+        try
         {
-            System.Console.ForegroundColor = ConsoleColor.Green;
-            System.Console.Write($"i={i}, ");
-            Thread.Sleep(100); // Sleep for 1 second
+            System.Console.WriteLine("CountUp started.");
+            Thread.Sleep(1000); // Sleep for 1 second before starting
+            // i = 1 to 100
+            for (int i = 1; i <= 100; i++)
+            {
+                System.Console.ForegroundColor = ConsoleColor.Green;
+                System.Console.Write($"i={i}, ");
+                Thread.Sleep(100); // Sleep for 1 second
+            }
+            Thread.Sleep(1000); // Sleep for 1 second after finishing
+            System.Console.WriteLine("CountUp finished.");
         }
-        Thread.Sleep(1000); // Sleep for 1 second after finishing
-        System.Console.WriteLine("CountUp finished.");
+        catch (ThreadInterruptedException ex)
+        {
+            System.Console.WriteLine("CountUp was interrupted: " + ex.Message);
+        }
     }
 
     public void CountDown()
@@ -68,8 +75,16 @@ class Program
         System.Console.WriteLine($"{thread2.Name}({thread2.ManagedThreadId}) is {thread2.ThreadState.ToString()}");//Running
 
         // Wait for both threads to finish
-        thread1.Join();
-        thread2.Join();
+        //thread1.Join();
+        //thread2.Join();
+        
+        //thread interruption example
+        Thread.Sleep(3000); // Let the threads run for 3 seconds
+        if (thread1.IsAlive)
+        {
+            System.Console.WriteLine($"Interrupting {thread1.Name}...");
+            thread1.Interrupt();
+        }
         
         System.Console.WriteLine(mainThread.Name+" has finished execution."); 
         //System.Console.ReadKey();
