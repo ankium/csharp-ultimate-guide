@@ -10,8 +10,9 @@ class MaxCount
 class NumbersUpCounter
 {
     public int Count { get; set; }
-    public void CountUp()
+    public void CountUp(Action<long> callback)
     {
+        long result = 0;
         try
         {
             System.Console.WriteLine("CountUp started.");
@@ -20,6 +21,7 @@ class NumbersUpCounter
 
             for (int i = 1; i <= Count; i++)
             {
+                result += i;
                 System.Console.ForegroundColor = ConsoleColor.Green;
                 System.Console.Write($"i={i}, ");
                 Thread.Sleep(100); // Sleep for 1 second
@@ -31,6 +33,10 @@ class NumbersUpCounter
         catch (ThreadInterruptedException ex)
         {
             System.Console.WriteLine("CountUp was interrupted: " + ex.Message);
+        }
+        finally
+        {
+            callback(result);
         }
     }
 }
@@ -70,8 +76,13 @@ class Program
         // Create a NumbersUpCounter instance
         NumbersUpCounter upCounter = new NumbersUpCounter(){ Count = 50 };//自定义线程对象并设置Count属性
 
+        // Create Callback for CountUp method
+        Action<long> callback = (result) =>
+        {
+            System.Console.WriteLine($"CountUp completed with result: {result}");
+        };
         // Create first thread
-        ThreadStart threadStart1 = new ThreadStart(upCounter.CountUp);//将CountUp方法转换为ThreadStart委托
+        ThreadStart threadStart1 = new ThreadStart(() => upCounter.CountUp(callback));//将CountUp方法转换为ThreadStart委托，使用lambda表达式传递callback参数
         Thread thread1 = new Thread(threadStart1);
         thread1.Name = "CountUp-Thread";
         thread1.Priority = ThreadPriority.Highest;
