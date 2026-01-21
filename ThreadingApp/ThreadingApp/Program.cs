@@ -7,6 +7,10 @@ class MaxCount
     public int Count { get; set; }
 }
 
+class Shared
+{
+    public static int SharedResources { get; set; }=0;
+}
 class NumbersUpCounter
 {
     public int Count { get; set; }
@@ -22,6 +26,8 @@ class NumbersUpCounter
             for (int i = 1; i <= Count; i++)
             {
                 result += i;
+                System.Console.Write($"SharedResources in CountUp: {Shared.SharedResources}, "); // 0
+                Shared.SharedResources++;// 1
                 System.Console.ForegroundColor = ConsoleColor.Green;
                 System.Console.Write($"i={i}, ");
                 Thread.Sleep(100); // Sleep for 1 second
@@ -55,6 +61,8 @@ class NumbersDownCounter
         }
         for (int j = maxCountObj.Count; j >= 1; j--)
         {
+            System.Console.Write($"SharedResources in CountDown: {Shared.SharedResources}, "); // Should match CountUp:1
+            Shared.SharedResources--;// 0
             System.Console.ForegroundColor = ConsoleColor.Red;
             System.Console.Write($"j={j}, ");
             Thread.Sleep(100); // Sleep for 1 second
@@ -74,7 +82,7 @@ class Program
         System.Console.WriteLine(mainThread.Name+" Started."); // Main thread
 
         // Create a NumbersUpCounter instance
-        NumbersUpCounter upCounter = new NumbersUpCounter(){ Count = 50 };//自定义线程对象并设置Count属性
+        NumbersUpCounter upCounter = new NumbersUpCounter(){ Count = 100 };//自定义线程对象并设置Count属性
 
         // Create Callback for CountUp method
         Action<long> callback = (result) =>
@@ -118,7 +126,7 @@ class Program
             thread1.Interrupt();
         }
         */
-
+        System.Console.WriteLine($"Final value of SharedResources: {Shared.SharedResources}"); // Should be 0 if both counters worked correctly
         System.Console.WriteLine(mainThread.Name+" has finished execution."); 
         //System.Console.ReadKey();
     }
