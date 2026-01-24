@@ -27,10 +27,15 @@ class NumbersUpCounter
             for (int i = 1; i <= Count; i++)
             {
                 result += i;
-                Monitor.Enter(Shared.lockObject);// acquire lock
-                System.Console.Write($"SharedResources in CountUp: {Shared.SharedResources}, "); // 0
-                Shared.SharedResources++;// 1
-                Monitor.Exit(Shared.lockObject);// release lock
+                // Monitor.Enter(Shared.lockObject);// acquire lock
+                // System.Console.Write($"SharedResources in CountUp: {Shared.SharedResources}, "); // 0
+                // Shared.SharedResources++;// 1
+                // Monitor.Exit(Shared.lockObject);// release lock
+                lock (Shared.lockObject)
+                {
+                    System.Console.Write($"SharedResources in CountUp: {Shared.SharedResources}, "); // 0
+                    Shared.SharedResources++;// 1
+                }
                 System.Console.ForegroundColor = ConsoleColor.Green;
                 System.Console.Write($"i={i}, ");
                 Thread.Sleep(100); // Sleep for 1 second
@@ -64,10 +69,15 @@ class NumbersDownCounter
         }
         for (int j = maxCountObj.Count; j >= 1; j--)
         {
-            Monitor.Enter(Shared.lockObject);// acquire lock
-            System.Console.Write($"SharedResources in CountDown: {Shared.SharedResources}, "); // Should match CountUp:1
-            Shared.SharedResources--;// 0
-            Monitor.Exit(Shared.lockObject);// release lock
+            // Monitor.Enter(Shared.lockObject);// acquire lock
+            // System.Console.Write($"SharedResources in CountDown: {Shared.SharedResources}, "); // Should match CountUp:1
+            // Shared.SharedResources--;// 0
+            // Monitor.Exit(Shared.lockObject);// release lock
+            lock (Shared.lockObject)
+            {
+                System.Console.Write($"SharedResources in CountDown: {Shared.SharedResources}, "); // Should match CountUp:1
+                Shared.SharedResources--;// 0
+            }
             System.Console.ForegroundColor = ConsoleColor.Red;
             System.Console.Write($"j={j}, ");
             Thread.Sleep(100); // Sleep for 1 second
