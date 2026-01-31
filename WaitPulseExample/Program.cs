@@ -26,7 +26,24 @@ class Producer
     public void Produce()
     {
         System.Console.WriteLine($"{Thread.CurrentThread.Name} started.");
+        for (int i = 0; i < 10; i++)
+        {
+            lock (Shared.LockObject)
+            {
+                if (Shared.Buffer.Count == Shared.BufferCapacity)
+                {
+                    System.Console.WriteLine("Buffer is full, producer is waiting.");
+                    System.Threading.Monitor.Wait(Shared.LockObject);
 
+                }
+                System.Console.WriteLine("Producer is producing an item.");
+                Thread.Sleep(5000); // Simulate time taken to produce an item
+                Shared.Buffer.Enqueue(i);
+                System.Threading.Monitor.Pulse(Shared.LockObject); // Notify consumer that an item is available
+                System.Console.WriteLine($"Producer produced: {i}");
+                Shared.Print();
+            }
+        }
         System.Console.WriteLine($"{Thread.CurrentThread.Name} finished.");
     }
 }
@@ -36,6 +53,25 @@ class Consumer
     public void Consume()
     {
         System.Console.WriteLine($"{Thread.CurrentThread.Name} started.");
+
+        for (int i = 0; i < 10; i++)
+        {
+            lock (Shared.LockObject)
+            {
+                if (Shared.Buffer.Count == 0)
+                {
+                    System.Console.WriteLine("Buffer is empty, consumer is waiting.");
+                    System.Threading.Monitor.Wait(Shared.LockObject);
+
+                }
+                System.Console.WriteLine("Consumer is consuming an item.");
+                Thread.Sleep(2500); // Simulate time taken to consume an item
+                int val = Shared.Buffer.Dequeue();
+                System.Threading.Monitor.Pulse(Shared.LockObject); // Notify producer that space is available
+                System.Console.WriteLine($"Consumer consumed: {val}");
+            }
+        }
+
 
         System.Console.WriteLine($"{Thread.CurrentThread.Name} finished.");
     }
