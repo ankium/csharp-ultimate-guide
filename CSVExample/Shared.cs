@@ -8,11 +8,13 @@ public class Shared
     public static string FilePath { get; set; }
     // Size of each chunk to be processed
     public static int ChunkSize { get; set; }
-    //
+    // Maximum number of concurrent threads
+    public static int MaxConcurrentThreads { get; set; }
     static Shared()
     {
         LockObject = new object();
         FilePath = "data.csv";
         ChunkSize = 100;
+        MaxConcurrentThreads = 3;
     }
 }

@@ -22,6 +22,10 @@ class Program
             List<Thread> threads = new List<Thread>();
             int threadCount = 0;
 
+            //Create a semaphore to limit the number of concurrent threads
+            Semaphore semaphore = new Semaphore(Shared.MaxConcurrentThreads, Shared.MaxConcurrentThreads);
+
+
             //Read each line from the CSV file
             while ((line = sr.ReadLine()) != null)
             {
@@ -43,7 +47,21 @@ class Program
                     //Create a new thread to process the chunk
                     Thread thread = new Thread(() =>
                     {
-                        InvokeDataProcessor(chunkName, chunkCopy);
+                        semaphore.WaitOne(); //Wait for semaphore
+                        try
+                        {
+                            //Invoke DataProcessor
+                            InvokeDataProcessor(chunkName, chunkCopy);
+                        }
+                        catch (Exception ex)
+                        {
+                            System.Console.WriteLine($"Error processing {chunkName}: {ex.Message}");
+                        }
+                        finally
+                        {
+                            semaphore.Release();//Release semaphore
+                        }
+                        
                     });
                     //Add thread to the Threads list
                     threads.Add(thread);
