@@ -102,13 +102,22 @@ class Program
         System.Console.WriteLine($"Processing {dataProcessor.ChunkName} of size: {dataProcessor.Chunk.Count}");
         dataProcessor.ProcessChunk();
         //Print out
-        lock (Shared.LockObject)
+        try
         {
+            Shared.Mutex.WaitOne();
             System.Console.WriteLine($"\nProcessed {dataProcessor.ChunkName} of size: {dataProcessor.Chunk.Count}");
             foreach (var kvp in dataProcessor.GenderCounts)
             {
                 System.Console.WriteLine($"{kvp.Key}: {kvp.Value}");
             }
+        }
+        catch (System.Exception ex)
+        {
+            System.Console.WriteLine($"Error printing results for {dataProcessor.ChunkName}: {ex.Message}");
+        }
+        finally
+        {
+            Shared.Mutex.ReleaseMutex();
         }
     }
 }
