@@ -12,7 +12,6 @@ public class Shared
     public static Mutex Mutex { get; set; } 
     static Shared()
     {
-        LockObject = new object();
         FilePath = "data.csv";
         ChunkSize = 100;
         MaxConcurrentThreads = 3;

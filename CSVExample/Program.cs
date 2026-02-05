@@ -18,8 +18,7 @@ class Program
             //Create a list to hold the current chunk
             List<string> chunk = new List<string>();
 
-            //Create a list to hold threads
-            List<Thread> threads = new List<Thread>();
+            // ThreadCount
             int threadCount = 0;
 
             //Create a semaphore to limit the number of concurrent threads
@@ -45,7 +44,7 @@ class Program
                     //Create chunk name
                     string chunkName = $"Chunk-{threadCount}";
                     //Create a new thread to process the chunk
-                    Thread thread = new Thread(() =>
+                    ThreadPool.QueueUserWorkItem((object? state) =>
                     {
                         semaphore.WaitOne(); //Wait for semaphore
                         try
@@ -62,11 +61,8 @@ class Program
                             semaphore.Release();//Release semaphore
                         }
                         
-                    });
-                    //Add thread to the Threads list
-                    threads.Add(thread);
-                    //Start the thread
-                    thread.Start();
+                    },chunkName);
+
                     //Clear the chunk for the next set of lines
                     chunk.Clear();
                 }
@@ -77,22 +73,20 @@ class Program
             {
                 threadCount++;
                 string chunkName = $"Chunk-{threadCount}";
-                Thread thread = new Thread(() =>
+                ThreadPool.QueueUserWorkItem((object? state) =>
                 {
                     InvokeDataProcessor(chunkName, chunk);
                 });
-                threads.Add(thread);
-                thread.Start();
-                //chunk.Clear();
             }
 
             //Wait for all threads to complete
-            foreach (Thread thread in threads)
-            {
-                thread.Join();
-            }
+            // foreach (Thread thread in threads)
+            // {
+            //     thread.Join();
+            // }
         }
         Console.WriteLine("\nAll CVS lines Processed.");//End of Main
+        Console.ReadKey();
     }
     //A method to invoke DataProcessor
     static void InvokeDataProcessor(string chunkName, List<string> chunk)
