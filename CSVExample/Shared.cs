@@ -10,6 +10,7 @@ public class Shared
     public static int MaxConcurrentThreads { get; set; }
     // Mutex for synchronizing access to shared resources
     public static Mutex Mutex { get; set; } 
+    public static CountdownEvent Count { get; set; }
     static Shared()
     {
         FilePath = "data.csv";

@@ -79,11 +79,8 @@ class Program
                 });
             }
 
-            //Wait for all threads to complete
-            // foreach (Thread thread in threads)
-            // {
-            //     thread.Join();
-            // }
+            Shared.Count = new CountdownEvent(threadCount);//Initialize CountdownEvent
+            Shared.Count.Wait();//Wait for all threads to complete
         }
         Console.WriteLine("\nAll CVS lines Processed.");//End of Main
         Console.ReadKey();
@@ -111,6 +108,10 @@ class Program
         }
         finally
         {
+            if (Shared.Count.CurrentCount > 0)
+            {
+                Shared.Count.Signal();//Signal that this thread is done
+            }
             Shared.Mutex.ReleaseMutex();
         }
     }
