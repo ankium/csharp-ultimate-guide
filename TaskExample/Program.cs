@@ -36,25 +36,6 @@ class Program
         stopwatch.Stop();
         long timeTakenForTasks = stopwatch.ElapsedMilliseconds;
         System.Console.WriteLine($"\nTasks - Time Taken: {timeTakenForTasks} ms");
-
-        stopwatch.Restart();
-        WithThreads();
-        stopwatch.Stop();
-        long timeTakenForThreads = stopwatch.ElapsedMilliseconds;
-        System.Console.WriteLine($"\nThreads - Time Taken: {timeTakenForThreads} ms");
-
-        if (timeTakenForTasks < timeTakenForThreads)
-        {
-            System.Console.WriteLine("TPL is faster.");
-        }
-        else if (timeTakenForTasks > timeTakenForThreads)
-        {
-            System.Console.WriteLine("Threads is faster.");
-        }
-        else
-        {
-            System.Console.WriteLine("Both TPL and Threads is equal.");
-        }
     }
 
     static void WithTask()
@@ -72,30 +53,8 @@ class Program
             downCounter.CountDown(25);
         });
 
-        task1.Wait();
-        task2.Wait();
-    }
-
-    static void WithThreads()
-    {
-        UpCounter upCounter = new UpCounter();
-        DownCounter downCounter = new DownCounter();
-        CountdownEvent countdownEvent = new CountdownEvent(2);
-
-        Thread thread1 = new Thread(() =>
-        {
-            upCounter.CountUp(20);
-            countdownEvent.Signal();
-        });
-
-        Thread thread2 = new Thread(() =>
-        {
-            downCounter.CountDown(25);
-            countdownEvent.Signal();
-        });
-
-        thread1.Start();
-        thread2.Start();
-        countdownEvent.Wait();
+        // task1.Wait();
+        // task2.Wait();
+        Task.WaitAll(task1,task2);
     }
 }
