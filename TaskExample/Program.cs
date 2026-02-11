@@ -63,13 +63,13 @@ class Program
         DownCounter downCounter = new DownCounter();
         CountdownEvent countdownEvent = new CountdownEvent(2);
 
-        Task task1 = Task.Run(() =>
+        Task task1 = Task.Factory.StartNew(() =>
         {
             upCounter.CountUp(20);
             countdownEvent.Signal();
         });
 
-        Task task2 = Task.Run(() =>
+        Task task2 = Task.Factory.StartNew(() =>
         {
             downCounter.CountDown(25);
             countdownEvent.Signal();
