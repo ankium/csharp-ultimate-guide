@@ -61,21 +61,19 @@ class Program
     {
         UpCounter upCounter = new UpCounter();
         DownCounter downCounter = new DownCounter();
-        CountdownEvent countdownEvent = new CountdownEvent(2);
 
         Task task1 = Task.Factory.StartNew(() =>
         {
             upCounter.CountUp(20);
-            countdownEvent.Signal();
         });
 
         Task task2 = Task.Factory.StartNew(() =>
         {
             downCounter.CountDown(25);
-            countdownEvent.Signal();
         });
 
-        countdownEvent.Wait();
+        task1.Wait();
+        task2.Wait();
     }
 
     static void WithThreads()
