@@ -2,41 +2,46 @@
 
 class Program
 {
-    static void Main(string[] args)
+    async static Task Main(string[] args)
     {
         string fileName = "example.txt";
         string content = "This is example content.";
+
         FileWriter fileWriter = new FileWriter();
         //Write data to a file asynchronously
         Task writeTask = fileWriter.WriteToFile(fileName, content);
-        writeTask.Wait();//Block until the write operation is completed
+        await writeTask;
+
         FileReader fileReader = new FileReader();
         //Read data from the file asynchronously
         Task<string> readTask = fileReader.ReadFromFile(fileName);
-        readTask.Wait();//Block the current thread until the read operation is completed
-        Console.WriteLine($"Read content: {readTask.Result}");
+        string readContent = await readTask;
+
+        Console.WriteLine($"Read content: {readContent}");
     }
 }
 
 class FileWriter
 {
-    public Task WriteToFile(string filename, string content)
+    public async Task WriteToFile(string filename, string content)
     {
         using (StreamWriter streamWriter = new StreamWriter(filename))
         {
             Task writerTask = streamWriter.WriteAsync(content);
-            return writerTask;
+            await writerTask;
         }
     }
 }
 
 class FileReader
 {
-    public Task<string> ReadFromFile(string filename)
+    public async Task<string> ReadFromFile(string filename)
     {
-        StreamReader streamReader = new StreamReader(filename);
-        Task<string> contentTask = streamReader.ReadToEndAsync();
-        streamReader.Close();
-        return contentTask;
+        using(StreamReader streamReader = new StreamReader(filename))
+        {
+            Task<string> contentTask = streamReader.ReadToEndAsync();
+            string content = await contentTask;
+            return content;
+        }
     }
 }
