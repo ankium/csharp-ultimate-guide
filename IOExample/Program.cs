@@ -9,13 +9,11 @@ class Program
 
         FileWriter fileWriter = new FileWriter();
         //Write data to a file asynchronously
-        Task writeTask = fileWriter.WriteToFile(fileName, content);
-        await writeTask;
+        await fileWriter.WriteToFile(fileName, content);
 
         FileReader fileReader = new FileReader();
         //Read data from the file asynchronously
-        Task<string> readTask = fileReader.ReadFromFile(fileName);
-        string readContent = await readTask;
+        string readContent = await fileReader.ReadFromFile(fileName);
 
         Console.WriteLine($"Read content: {readContent}");
     }
@@ -27,8 +25,7 @@ class FileWriter
     {
         using (StreamWriter streamWriter = new StreamWriter(filename))
         {
-            Task writerTask = streamWriter.WriteAsync(content);
-            await writerTask;
+            await streamWriter.WriteAsync(content);
         }
     }
 }
@@ -39,8 +36,7 @@ class FileReader
     {
         using(StreamReader streamReader = new StreamReader(filename))
         {
-            Task<string> contentTask = streamReader.ReadToEndAsync();
-            string content = await contentTask;
+            string content = await streamReader.ReadToEndAsync();
             return content;
         }
     }
